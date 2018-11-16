@@ -1,8 +1,13 @@
 import Search from "./models/Search";
+import Recipe from "./models/Recipe";
 import { elements, renderLoader, clearLoader } from "./views/base";
 import * as SearchView from "./views/SearchViews";
 
 const state = {};
+
+/**
+ *  Search Controller
+ **/
 
 const controlSearch = async () => {
   // 1) Get query from view
@@ -21,21 +26,31 @@ const controlSearch = async () => {
     await state.search.getResults();
 
     // 5) Render results on UI
-    clearLoader(); 
+    clearLoader();
     SearchView.renderResults(state.search.result);
   }
 };
 
-elements.searchForm.addEventListener('submit', e => {
+elements.searchForm.addEventListener("submit", e => {
   e.preventDefault();
   controlSearch();
 });
 
-elements.searchResPages.addEventListener('click', e => {
-  const btn = e.target.closest('.btn-inline');
+elements.searchResPages.addEventListener("click", e => {
+  const btn = e.target.closest(".btn-inline");
   if (btn) {
-      const goToPage = parseInt(btn.dataset.goto, 10);
-      SearchView.clearResults();
-      SearchView.renderResults(state.search.result, goToPage);
+    const goToPage = parseInt(btn.dataset.goto, 10);
+    SearchView.clearResults();
+    SearchView.renderResults(state.search.result, goToPage);
   }
 });
+
+/**
+ *  Recipe Controller
+ **/
+
+const r = new Recipe(23456);
+
+r.getRecipe();
+
+console.log(r); 
